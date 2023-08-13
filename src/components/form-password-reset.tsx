@@ -28,7 +28,7 @@ export function FormPasswordReset() {
                     {errors.password && <span>This field is required</span>}
                 </div>
                 <div>
-                    <label>Repeat new password</label>
+                <label>Repeat new password</label>
                     <input {...register("passwordConfirmation", {required: true})} type="password" />
                     {errors.passwordConfirmation && <span>This field is required</span>}
                 </div>

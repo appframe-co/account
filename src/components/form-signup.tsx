@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 type Inputs = {
     email: string
@@ -9,10 +10,17 @@ type Inputs = {
 }
 
 export function FormSignup() {
+    const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        const res = await fetch('api/signup', {method: 'POST',  headers: {
+            'Content-Type': 'application/json',
+          }, body: JSON.stringify(data)});
+        const dataJson = await res.json();
+        if (!dataJson.error) {
+            router.push(process.env.NEXT_PUBLIC_URL_ADMIN || '/')
+        }
     }
 
     return (
