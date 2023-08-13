@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 type Inputs = {
     username: string
@@ -9,10 +10,17 @@ type Inputs = {
 }
 
 export function FormLogin() {
+    const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        const res = await fetch('api/login', {method: 'POST',  headers: {
+            'Content-Type': 'application/json',
+          }, body: JSON.stringify(data)});
+        const dataJson = await res.json();
+        if (!dataJson.error) {
+            router.refresh();
+        }
     }
 
     return (
@@ -21,9 +29,9 @@ export function FormLogin() {
                 <div>
                     <label>Username</label>
                     <input {...register("username")} />
-                </div>  
+                </div>
                 <div>
-                    <label>Пароль</label>
+                    <label>Password</label>
                     <input {...register("password", { required: true, maxLength: 100 })} type="password" />
                     {errors.password && <span>This field is required</span>}
                 </div>

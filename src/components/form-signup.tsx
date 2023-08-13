@@ -19,7 +19,7 @@ export function FormSignup() {
           }, body: JSON.stringify(data)});
         const dataJson = await res.json();
         if (!dataJson.error) {
-            router.push(process.env.NEXT_PUBLIC_URL_ADMIN || '/')
+            router.refresh();
         }
     }
 
