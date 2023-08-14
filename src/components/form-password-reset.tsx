@@ -1,23 +1,36 @@
 'use client'
 
+import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 type Inputs = {
-    password: string
-    passwordConfirmation: string
-    recoveryId: string
-    passRecoveryId: string
+    password: string;
+    passwordConfirmation: string;
+    recoveryId: string;
+    recoveryHash: string;
 }
 
-export function FormPasswordReset() {
+type ComponentProps = {
+    recoveryId: string;
+    recoveryHash: string;
+}
+
+export const FormPasswordReset:React.FC<ComponentProps> = (props) => {
+    const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
-    }
+    const {recoveryId, recoveryHash} = props;
 
-    const recoveryId = '';
-    const passRecoveryId = '';
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        const res = await fetch('api/password_reset', {method: 'POST',  headers: {
+            'Content-Type': 'application/json',
+          }, body: JSON.stringify(data)});
+        const dataJson = await res.json();
+        if (!dataJson.error) {
+            router.push('/');
+        }
+    };
 
     return (
         <>
@@ -34,8 +47,8 @@ export function FormPasswordReset() {
                 </div>
 
                 <input type="hidden" {...register("recoveryId")} value={recoveryId} />
-                <input type="hidden" {...register("passRecoveryId")} value={passRecoveryId} />
-                
+                <input type="hidden" {...register("recoveryHash")} value={recoveryHash} />
+
                 <input type="submit" value="Confirm" />
             </form>
         </>

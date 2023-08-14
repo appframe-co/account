@@ -1,16 +1,24 @@
 'use client'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 type Inputs = {
     email: string
 }
 
 export function FormBeginPasswordReset() {
+    const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        const res = await fetch('api/begin_password_reset', {method: 'POST',  headers: {
+            'Content-Type': 'application/json',
+          }, body: JSON.stringify(data)});
+        const dataJson = await res.json();
+        if (!dataJson.error) {
+            router.push('/');
+        }
     }
 
     return (

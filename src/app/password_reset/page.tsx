@@ -2,12 +2,23 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import styles from './page.module.css'
 import { FormPasswordReset } from '@/components/form-password-reset'
+import { redirect } from 'next/navigation'
+import { isToken } from '@/lib/token'
 
 export const metadata: Metadata = {
     title: 'Reset password | AppFrame'
 }
 
-export default function PasswordReset() {
+export default function PasswordReset({searchParams}: {searchParams: { [key: string]: string | undefined }}) {
+    if (isToken()) {
+        redirect(process.env.URL_ADMIN as string);
+    }
+
+    const {recovery_id: recoveryId, recovery_hash: recoveryHash} = searchParams;
+    if (!recoveryId || !recoveryHash) {
+        redirect('/begin_password_reset');
+    }
+
     return (
         <>
             <main className={styles.main}>
@@ -22,7 +33,7 @@ export default function PasswordReset() {
                     </li>
                 </ul>
 
-                <FormPasswordReset />
+                <FormPasswordReset recoveryId={recoveryId} recoveryHash={recoveryHash} />
             </main>
         </>
     )
