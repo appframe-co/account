@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Signup | AppFrame'
 }
 
-export default async function Signup() {
+export default function Signup() {
     if (isToken()) {
         redirect(process.env.URL_ADMIN as string);
     }
@@ -17,7 +17,7 @@ export default async function Signup() {
     return (
         <>
             <main className={styles.main}>
-                <p>LOGO</p>
+                <p>AppFrame</p>
 
                 <ul>
                     <li>

@@ -22,7 +22,7 @@ export default function PasswordReset({searchParams}: {searchParams: { [key: str
     return (
         <>
             <main className={styles.main}>
-                <p>LOGO</p>
+                <p>AppFrame</p>
 
                 <ul>
                     <li>
