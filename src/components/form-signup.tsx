@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 
 type Inputs = {
     email: string
-    username: string
     password: string
 }
 
@@ -30,11 +29,6 @@ export function FormSignup() {
                     <label>Email</label>
                     <input {...register("email", { required: true })} />
                     {errors.email && <span>This field is required</span>}
-                </div>
-                <div>
-                    <label>Username</label>
-                    <input {...register("username", { required: true, maxLength: 32 })} />
-                    {errors.username && <span>This field is required</span>}
                 </div>
                 <div>
                     <label>Password</label>

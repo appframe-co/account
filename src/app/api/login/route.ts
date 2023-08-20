@@ -8,9 +8,9 @@ import CryptoJS from 'crypto-js'
             'Content-Type': 'application/json',
           }, body: JSON.stringify(body)});
         const {status, data} = await res.json();
-        
-        if (data.access_token) {
-            const {access_token: accessToken} = data;
+
+        if (data.accessToken) {
+            const {accessToken} = data;
 
             const cookieValue = CryptoJS.AES.encrypt(accessToken, process.env.SECRET_COOKIE_PASSWORD as string).toString();
             const cookieName = process.env.SESSION_COOKIE_NAME;

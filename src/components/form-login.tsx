@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
 type Inputs = {
-    username: string
+    email: string
     password: string
 }
 
@@ -27,8 +27,9 @@ export function FormLogin() {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label>Username</label>
-                    <input {...register("username")} />
+                    <label>Email</label>
+                    <input {...register("email", { required: true })} />
+                    {errors.email && <span>This field is required</span>}
                 </div>
                 <div>
                     <label>Password</label>
