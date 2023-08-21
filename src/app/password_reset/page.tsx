@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PasswordReset({searchParams}: {searchParams: { [key: string]: string | undefined }}) {
     if (isToken()) {
-        redirect(process.env.URL_ADMIN as string);
+        redirect(process.env.URL_PROJECT_ADMIN as string);
     }
 
     const {recovery_id: recoveryId, recovery_hash: recoveryHash} = searchParams;

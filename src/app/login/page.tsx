@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Login() {
     if (isToken()) {
-        redirect(process.env.URL_ADMIN as string);
+        redirect(process.env.URL_PROJECT_ADMIN as string);
     }
 
     return (
