@@ -7,7 +7,7 @@ import CryptoJS from 'crypto-js'
         const res = await fetch(process.env.URL_USER_SERVICE + '/api/login', {method: 'POST',  headers: {
             'Content-Type': 'application/json',
           }, body: JSON.stringify(body)});
-        const {status, data} = await res.json();
+        const data = await res.json();
 
         if (data.accessToken) {
             const {accessToken} = data;
@@ -19,7 +19,7 @@ import CryptoJS from 'crypto-js'
             const expires = "expires="+ d.toUTCString();
             return NextResponse.json({error: null}, {headers: { 'Set-Cookie': `${cookieName}=${cookieValue}; ${expires}; path=/` }});
         } else {
-            return NextResponse.json(data, { status });
+            return NextResponse.json(data);
         }
     } catch (e) {
         NextResponse.json({ error: 'failed to fetch data' }, { status: 500 });
