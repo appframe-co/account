@@ -4,7 +4,7 @@ import CryptoJS from 'crypto-js'
  export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const res = await fetch(process.env.URL_USER_SERVICE + '/api/signup', {method: 'POST',  headers: {
+        const res = await fetch(process.env.URL_AUTH_SERVICE + '/api/signup', {method: 'POST',  headers: {
             'Content-Type': 'application/json',
           }, body: JSON.stringify(body)});
         const data = await res.json();
