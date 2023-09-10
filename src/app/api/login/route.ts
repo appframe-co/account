@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
-import CryptoJS from 'crypto-js'
 
- export async function POST(req: Request) {
+export async function POST(req: Request) {
     try {
         const body = await req.json();
         const res = await fetch(process.env.URL_AUTH_SERVICE + '/api/login', {method: 'POST',  headers: {
@@ -12,7 +11,7 @@ import CryptoJS from 'crypto-js'
         if (data.accessToken) {
             const {accessToken} = data;
 
-            const cookieValue = CryptoJS.AES.encrypt(accessToken, process.env.SECRET_COOKIE_PASSWORD as string).toString();
+            const cookieValue = accessToken;
             const cookieName = process.env.SESSION_COOKIE_NAME;
             const d = new Date();
             d.setTime(d.getTime() + (7*24*60*60*1000));
