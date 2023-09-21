@@ -16,7 +16,8 @@ import { NextResponse } from 'next/server'
             const d = new Date();
             d.setTime(d.getTime() + (7*24*60*60*1000));
             const expires = "expires="+ d.toUTCString();
-            return NextResponse.json({error: null}, {headers: { 'Set-Cookie': `${cookieName}=${cookieValue}; ${expires}; path=/` }});
+            const domain = 'Domain='+process.env.URL_COOKIE_DOMAIN;
+            return NextResponse.json({error: null}, {headers: { 'Set-Cookie': `${cookieName}=${cookieValue}; ${expires}; path=/; ${domain}` }});
         } else {
             return NextResponse.json(data);
         }
