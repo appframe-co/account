@@ -17,18 +17,11 @@ export default function Signup() {
     return (
         <>
             <main className={styles.main}>
-                <p>AppFrame</p>
-
-                <ul>
-                    <li>
-                        <Link href="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link href="/signup">Signup</Link>
-                    </li>
-                </ul>
-
-                <FormSignup />
+                <div className={styles.logo}><span>AppFrame</span> / Create Project</div>
+                <div className={styles.container}>
+                    <FormSignup />
+                </div>
+                <div className='info'><span>Already have a AppFrame Project?</span> <Link href="/login">Log in</Link></div>
             </main>
         </>
     )

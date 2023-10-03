@@ -22,18 +22,11 @@ export default function PasswordReset({searchParams}: {searchParams: { [key: str
     return (
         <>
             <main className={styles.main}>
-                <p>AppFrame</p>
-
-                <ul>
-                    <li>
-                        <Link href="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link href="/signup">Signup</Link>
-                    </li>
-                </ul>
-
-                <FormPasswordReset recoveryId={recoveryId} recoveryHash={recoveryHash} />
+                <div className={styles.logo}><span>AppFrame</span> / Password reset</div>
+                <div className={styles.container}>
+                    <FormPasswordReset recoveryId={recoveryId} recoveryHash={recoveryHash} />
+                </div>
+                <div className='info'><span>Already have a AppFrame Project?</span> <Link href="/login">Log in</Link></div>
             </main>
         </>
     )

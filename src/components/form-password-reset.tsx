@@ -18,7 +18,7 @@ type ComponentProps = {
 
 export const FormPasswordReset:React.FC<ComponentProps> = (props) => {
     const router = useRouter();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, setError, formState: { errors } } = useForm<Inputs>();
 
     const {recoveryId, recoveryHash} = props;
 
@@ -27,29 +27,33 @@ export const FormPasswordReset:React.FC<ComponentProps> = (props) => {
             'Content-Type': 'application/json',
           }, body: JSON.stringify(data)});
         const dataJson = await res.json();
-        if (!dataJson.error) {
-            router.push('/');
+        if (dataJson.error) {
+            setError('root', {type: 'manual', message: dataJson.description ?? ''});
+            return;
         }
+
+        router.push('/');
     };
 
     return (
         <>
+            {errors.root && <div className='errors'>{errors.root?.message}</div>}
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label>New password</label>
-                    <input {...register("password", {required: true})} type="password" />
-                    {errors.password && <span>This field is required</span>}
+                <div className={'textfield' + (errors.password ? ' error': '')}>
+                    <div className={'name'}>New password</div>
+                    <input {...register("password", { required: true, maxLength: 100 })} type="password" className='input' />
+                    {errors.password && <div className='msg'>This field is required</div>}
                 </div>
-                <div>
-                <label>Repeat new password</label>
-                    <input {...register("passwordConfirmation", {required: true})} type="password" />
-                    {errors.passwordConfirmation && <span>This field is required</span>}
+                <div className={'textfield' + (errors.password ? ' error': '')}>
+                    <div className={'name'}>Repeat new password</div>
+                    <input {...register("passwordConfirmation", { required: true, maxLength: 100 })} type="password" className='input' />
+                    {errors.password && <div className='msg'>This field is required</div>}
                 </div>
 
                 <input type="hidden" {...register("recoveryId")} value={recoveryId} />
                 <input type="hidden" {...register("recoveryHash")} value={recoveryHash} />
 
-                <input type="submit" value="Confirm" />
+                <button type='submit' className='button'>Confirm</button>
             </form>
         </>
     )
